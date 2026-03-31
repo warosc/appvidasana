@@ -1,0 +1,7 @@
+node_modules/
+bot/.env
+bot/node_modules/
+admin/.env
+admin/node_modules/
+.env
+uploads/

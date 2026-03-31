@@ -1,0 +1,97 @@
+name: vida-saludable-gt
+
+services:
+
+  # ── Static website (nginx) ──────────────────────────────────────────
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vsg-web
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/index.html"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    networks:
+      - vsg-net
+
+  # ── WhatsApp Bot (Node.js) ──────────────────────────────────────────
+  bot:
+    build:
+      context: ./bot
+      dockerfile: Dockerfile
+    container_name: vsg-bot
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./bot/.env          # copy from bot/.env.example and fill in credentials
+    environment:
+      PORT: "3000"
+      NODE_ENV: production
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    networks:
+      - vsg-net
+
+  # ── PostgreSQL ───────────────────────────────────────────────────────
+  db:
+    image: postgres:16-alpine
+    container_name: vsg-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: vsg_admin
+      POSTGRES_USER: vsg
+      POSTGRES_PASSWORD: vsg_pass
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vsg -d vsg_admin"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - vsg-net
+
+  # ── Admin Panel (Node.js + Express) ─────────────────────────────────
+  admin:
+    build:
+      context: ./admin
+      dockerfile: Dockerfile
+    container_name: vsg-admin
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    env_file:
+      - ./admin/.env        # copy from admin/.env.example and set JWT_SECRET
+    environment:
+      DATABASE_URL: postgres://vsg:vsg_pass@db:5432/vsg_admin
+      PORT: "4000"
+      NODE_ENV: production
+    volumes:
+      - uploads:/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:4000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    networks:
+      - vsg-net
+
+volumes:
+  pgdata:
+  uploads:
+
+networks:
+  vsg-net:
+    driver: bridge

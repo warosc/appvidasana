@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel Admin | Vida Saludable Guatemala</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/admin.css" />
+</head>
+<body>
+
+<!-- ══ LOGIN SCREEN ══════════════════════════════════════════════ -->
+<div id="loginScreen" class="login-screen">
+  <div class="login-card">
+    <div class="login-logo">🌿</div>
+    <h1>Panel Admin</h1>
+    <p class="login-sub">Vida Saludable Guatemala</p>
+    <form id="loginForm" onsubmit="doLogin(event)">
+      <label>Correo electrónico
+        <input type="email" id="loginEmail" placeholder="admin@vidasaludable.gt" required autocomplete="email" />
+      </label>
+      <label>Contraseña
+        <input type="password" id="loginPass" placeholder="••••••••" required autocomplete="current-password" />
+      </label>
+      <p id="loginError" class="form-error" style="display:none"></p>
+      <button type="submit" class="btn btn-green btn-block" id="loginBtn">Ingresar al panel</button>
+    </form>
+  </div>
+</div>
+
+<!-- ══ APP SHELL ════════════════════════════════════════════════ -->
+<div id="appShell" class="app-shell" style="display:none">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-logo">🌿</span>
+      <div class="sidebar-brand">
+        <strong>VSG Admin</strong>
+        <small id="sidebarUserName">—</small>
+      </div>
+      <button class="sidebar-close" onclick="toggleSidebar()" aria-label="Cerrar menú">✕</button>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#dashboard"   class="nav-item" data-view="dashboard">   <span class="nav-icon">📊</span> Inicio         </a>
+      <a href="#products"    class="nav-item" data-view="products">    <span class="nav-icon">📦</span> Productos      </a>
+      <a href="#categories"  class="nav-item" data-view="categories">  <span class="nav-icon">🗂️</span> Categorías     </a>
+      <a href="#inventory"   class="nav-item" data-view="inventory">   <span class="nav-icon">📋</span> Inventario     </a>
+      <a href="#orders"      class="nav-item" data-view="orders">      <span class="nav-icon">🛍️</span> Pedidos        </a>
+      <a href="#promotions"  class="nav-item" data-view="promotions">  <span class="nav-icon">🏷️</span> Promociones    </a>
+      <a href="#reports"     class="nav-item" data-view="reports">     <span class="nav-icon">📈</span> Reportes       </a>
+      <a href="#users"       class="nav-item admin-only" data-view="users">       <span class="nav-icon">👥</span> Usuarios       </a>
+      <a href="#settings"    class="nav-item admin-only" data-view="settings">    <span class="nav-icon">⚙️</span> Configuración  </a>
+      <a href="#audit"       class="nav-item admin-only" data-view="audit">       <span class="nav-icon">🔍</span> Historial      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="btn-logout-side" onclick="doLogout()">🚪 Cerrar sesión</button>
+    </div>
+  </aside>
+
+  <!-- OVERLAY for mobile sidebar -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <!-- Top bar -->
+    <header class="topbar">
+      <button class="topbar-menu" onclick="toggleSidebar()" aria-label="Menú">☰</button>
+      <h2 class="topbar-title" id="topbarTitle">Dashboard</h2>
+      <div class="topbar-actions" id="topbarActions"></div>
+    </header>
+
+    <!-- View container -->
+    <div class="view-container" id="viewContainer">
+      <div class="loading-state">Cargando…</div>
+    </div>
+  </main>
+</div>
+
+<!-- ══ GLOBAL MODAL ════════════════════════════════════════════ -->
+<div class="modal-bg" id="modalBg" onclick="closeModal()" style="display:none"></div>
+<div class="modal-box" id="modalBox" style="display:none">
+  <div class="modal-header">
+    <h3 id="modalTitle">Modal</h3>
+    <button onclick="closeModal()">✕</button>
+  </div>
+  <div id="modalBody"></div>
+</div>
+
+<!-- ══ TOAST ════════════════════════════════════════════════════ -->
+<div id="toastEl" class="toast"></div>
+
+<script src="/js/app.js"></script>
+</body>
+</html>
