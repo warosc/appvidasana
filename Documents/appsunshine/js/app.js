@@ -38,6 +38,7 @@ const PRODUCTS = [
     desc: 'Gel puro de aloe vera para piel, cabello y mucosas. Hidratante y regenerador natural.',
     price: 207,
     emoji: '🌵',
+    img: 'https://uscoreprod.naturessunshine.com/cdn-cgi/image/width=400,height=auto,format=webp,quality=80,fit=contain/globalassets/nsp-products-catalog/variants/lus1679_aloe_vera_gel-1920.webp',
     categories: ['belleza', 'digestivo'],
     featured: false,
     stock: true,
@@ -80,6 +81,7 @@ const PRODUCTS = [
     desc: 'Raíz andina adaptógena. Aumenta vitalidad, energía y libido naturalmente.',
     price: 257,
     emoji: '🌾',
+    img: 'https://uscoreprod.naturessunshine.com/cdn-cgi/image/width=400,height=auto,format=webp,quality=80,fit=contain/globalassets/nsp-products-catalog/variants/lus1117_maca_bottle-1920.webp',
     categories: ['bienestar', 'energia'],
     featured: false,
     stock: true,
@@ -152,6 +154,7 @@ const PRODUCTS = [
     desc: 'Laxante suave natural. Regula el tránsito intestinal sin crear dependencia.',
     price: 195,
     emoji: '🌿',
+    img: 'https://uscoreprod.naturessunshine.com/cdn-cgi/image/width=400,height=auto,format=webp,quality=80,fit=contain/globalassets/nsp-products-catalog/products/cascara-sagrada_1432x800-1-1920.webp',
     categories: ['detox', 'digestivo'],
     featured: false,
     stock: true,
@@ -162,6 +165,7 @@ const PRODUCTS = [
     desc: 'Clorofila concentrada. Desintoxicante, alcalinizante y desodorizante interno. ⭐ Más buscado',
     price: 220,
     emoji: '🟢',
+    img: 'https://uscoreprod.naturessunshine.com/cdn-cgi/image/width=400,height=auto,format=webp,quality=80,fit=contain/globalassets/nsp-products-catalog/variants/lus1683_liquid-chlorophyll-1920.webp',
     categories: ['detox'],
     featured: true,
     stock: true,
@@ -172,6 +176,7 @@ const PRODUCTS = [
     desc: 'Fórmula depurativa de hierbas. Estimula el movimiento intestinal y elimina toxinas. ⭐ Más buscado',
     price: 252,
     emoji: '🌱',
+    img: 'https://uscoreprod.naturessunshine.com/cdn-cgi/image/width=400,height=auto,format=webp,quality=80,fit=contain/globalassets/nsp-products-catalog/variants/lus990_lower-bowel-stimulator-bottle-1920.webp',
     categories: ['detox'],
     featured: true,
     stock: true,
@@ -192,6 +197,7 @@ const PRODUCTS = [
     desc: 'Fibra soluble de cáscara de psyllium. Limpia el colon y reduce el colesterol. ⭐ Más buscado',
     price: 383,
     emoji: '🌾',
+    img: 'https://uscoreprod.naturessunshine.com/cdn-cgi/image/width=400,height=auto,format=webp,quality=80,fit=contain/globalassets/nsp-products-catalog/variants/lus545_psyllium_hulls_bottle-1920.webp',
     categories: ['detox'],
     featured: true,
     stock: true,
@@ -214,6 +220,7 @@ const PRODUCTS = [
     desc: 'Jugo puro de aloe. Calma la inflamación gastrointestinal y favorece la digestión. ⭐ Más buscado',
     price: 290,
     emoji: '🥤',
+    img: 'https://uscoreprod.naturessunshine.com/cdn-cgi/image/width=400,height=auto,format=webp,quality=80,fit=contain/globalassets/nsp-products-catalog/variants/lus1680_aloe_vera_juice_32oz-1920.webp',
     categories: ['digestivo'],
     featured: true,
     stock: true,
@@ -350,6 +357,7 @@ const PRODUCTS = [
     desc: 'Glucosamina natural. Reduce el dolor articular y mejora la movilidad.',
     price: 217,
     emoji: '🦵',
+    img: 'https://uscoreprod.naturessunshine.com/cdn-cgi/image/width=400,height=auto,format=webp,quality=80,fit=contain/globalassets/nsp-products-catalog/variants/lus903_glucosamine_bottle-1920.webp',
     categories: ['articular'],
     featured: false,
     stock: true,
@@ -382,6 +390,7 @@ const PRODUCTS = [
     desc: 'Bloquea la absorción de grasas de la dieta. Quitosano natural de alta pureza.',
     price: 267,
     emoji: '🟡',
+    img: 'https://uscoreprod.naturessunshine.com/cdn-cgi/image/width=400,height=auto,format=webp,quality=80,fit=contain/globalassets/nsp-products-catalog/variants/lus3028_fat_grabbers_bottle-1920.webp',
     categories: ['metabolica'],
     featured: false,
     stock: true,
@@ -402,6 +411,7 @@ const PRODUCTS = [
     desc: 'Complejo multienzimático digestivo. Mejora la absorción de nutrientes y elimina la pesadez.',
     price: 303,
     emoji: '⚙️',
+    img: 'https://uscoreprod.naturessunshine.com/cdn-cgi/image/width=400,height=auto,format=webp,quality=80,fit=contain/globalassets/nsp-products-catalog/products/1836_foodenzymes_body-1920.webp',
     categories: ['metabolica', 'digestivo'],
     featured: false,
     stock: true,
@@ -422,6 +432,7 @@ const PRODUCTS = [
     desc: 'Quelación oral con vitaminas y minerales. Limpia arterias y apoya la salud cardiovascular.',
     price: 390,
     emoji: '❤️',
+    img: 'https://uscoreprod.naturessunshine.com/cdn-cgi/image/width=400,height=auto,format=webp,quality=80,fit=contain/globalassets/nsp-products-catalog/variants/lus4201_mega-chel_bottle-1920.webp',
     categories: ['metabolica'],
     featured: false,
     stock: true,
@@ -474,6 +485,7 @@ const PRODUCTS = [
     desc: 'Complejo B + vitamina C para el sistema nervioso. Reduce ansiedad, insomnio y agotamiento. ⭐ Más buscado',
     price: 462,
     emoji: '💛',
+    img: 'https://uscoreprod.naturessunshine.com/cdn-cgi/image/width=400,height=auto,format=webp,quality=80,fit=contain/globalassets/nsp-products-catalog/variants/lus1617_nutri-calm_bottle-1920.webp',
     categories: ['mental', 'energia'],
     featured: true,
     stock: true,
@@ -801,7 +813,11 @@ function renderCatalog(filter = 'all') {
 
   grid.innerHTML = filtered.map(p => `
     <div class="product-card" data-categories="${p.categories.join(' ')}">
-      <div class="product-img">${p.emoji}</div>
+      <div class="product-img${p.img ? ' product-img--photo' : ''}">
+        ${p.img
+          ? `<img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.parentElement.innerHTML='${p.emoji}';this.parentElement.classList.remove('product-img--photo')">`
+          : p.emoji}
+      </div>
       <div class="product-body">
         <div class="product-category">${getCategoryLabel(p.categories[0])}</div>
         <div class="product-name">${p.name}</div>

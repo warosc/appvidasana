@@ -597,11 +597,22 @@ section { padding: 4rem 0; }
 .product-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
 .product-img {
   background: var(--bg-alt);
-  height: 120px;
+  height: 160px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 3rem;
+  overflow: hidden;
+}
+.product-img--photo {
+  background: #fff;
+  padding: 0.5rem;
+}
+.product-img--photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 .product-body { padding: 1rem; flex: 1; display: flex; flex-direction: column; gap: .4rem; }
 .product-category {
