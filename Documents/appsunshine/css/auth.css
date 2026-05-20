@@ -135,15 +135,15 @@
 .auth-form label {
   display: flex;
   flex-direction: column;
-  gap: .35rem;
+  gap: .4rem;
   font-size: .82rem;
   font-weight: 600;
-  color: var(--text);
+  color: var(--text-muted);
 }
 .auth-form input {
   border: 1.5px solid var(--border);
-  border-radius: 8px;
-  padding: .65rem .9rem;
+  border-radius: 10px;
+  padding: .75rem 1rem;
   font-size: .9rem;
   font-family: inherit;
   color: var(--text);
@@ -151,7 +151,7 @@
   outline: none;
   background: var(--bg);
 }
-.auth-form input:focus { border-color: var(--primary); background: white; box-shadow: 0 0 0 3px rgba(92,110,46,.12); }
+.auth-form input:focus { border-color: var(--primary); background: white; box-shadow: 0 0 0 4px rgba(92,110,46,.08); }
 
 .btn-auth-submit {
   width: 100%;
@@ -229,11 +229,68 @@
 /* POINTS CARD */
 .points-card {
   margin: 1.25rem 1.5rem;
-  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, var(--secondary) 100%);
-  border-radius: 16px;
-  padding: 1.5rem;
+  border-radius: 20px;
+  padding: 1.75rem;
   color: white;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(30, 40, 20, 0.25);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
+.points-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 45%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 55%
+  );
+  transition: all 0.6s ease;
+  transform: rotate(-15deg);
+  pointer-events: none;
+}
+.points-card:hover::before {
+  left: 100%;
+  top: 100%;
+}
+
+/* Bronze Tier - metallic feel */
+.points-card.bronze {
+  background: linear-gradient(135deg, #4A2B14 0%, #704224 40%, #8A522E 70%, #5E351B 100%);
+  box-shadow: 0 15px 35px rgba(112, 66, 36, 0.25);
+}
+
+/* Silver Tier - chrome metallic feel */
+.points-card.silver {
+  background: linear-gradient(135deg, #2D3748 0%, #718096 40%, #A0AEC0 70%, #4A5568 100%);
+  box-shadow: 0 15px 35px rgba(113, 128, 150, 0.25);
+}
+
+/* Gold Tier - hologram gold metallic feel */
+.points-card.gold {
+  background: linear-gradient(135deg, #785A18 0%, #D4AF37 40%, #F3C63F 70%, #9B7A24 100%);
+  box-shadow: 0 15px 35px rgba(212, 175, 55, 0.3);
+}
+.points-card.gold::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(125deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.08) 30%, rgba(255,255,255,0.18) 40%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0) 100%);
+  background-size: 200% 200%;
+  animation: shine 4s infinite linear;
+  pointer-events: none;
+}
+@keyframes shine {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
 .points-card-top {
   display: flex;
   justify-content: space-between;
@@ -245,7 +302,7 @@
 .points-value { font-size: 2.8rem; font-weight: 800; line-height: 1; margin-bottom: 1rem; }
 .points-progress-wrap { margin-bottom: .5rem; }
 .points-progress-bar { background: rgba(255,255,255,.2); border-radius: 100px; height: 6px; margin-bottom: .4rem; overflow: hidden; }
-.points-progress-fill { height: 100%; border-radius: 100px; transition: width .5s ease; }
+.points-progress-fill { height: 100%; border-radius: 100px; transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1); background: rgba(255, 255, 255, 0.85); box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
 .points-progress-wrap small { font-size: .75rem; color: rgba(255,255,255,.75); }
 .points-equivalence { font-size: .82rem; color: rgba(255,255,255,.75); }
 .points-equivalence strong { color: white; }

@@ -27,7 +27,8 @@ const PRODUCTS = [
     price: 593,
     emoji: '🫐',
     categories: ['antioxidante', 'energia'],
-    featured: false,
+    featured: true,
+    bestseller: true,
     stock: true,
   },
 
@@ -40,7 +41,8 @@ const PRODUCTS = [
     emoji: '🌵',
     img: 'https://uscoreprod.naturessunshine.com/cdn-cgi/image/width=400,height=auto,format=webp,quality=80,fit=contain/globalassets/nsp-products-catalog/variants/lus1679_aloe_vera_gel-1920.webp',
     categories: ['belleza', 'digestivo'],
-    featured: false,
+    featured: true,
+    bestseller: false,
     stock: true,
   },
   {
@@ -802,17 +804,26 @@ function renderCatalog(filter = 'all') {
   const grid = document.getElementById('catalogGrid');
   if (!grid) return;
 
-  const filtered = filter === 'all'
-    ? PRODUCTS
-    : PRODUCTS.filter(p => p.categories.includes(filter));
+  let filtered = PRODUCTS;
+
+  // Apply filters
+  if (filter === 'bestseller') {
+    filtered = PRODUCTS.filter(p => p.bestseller);
+  } else if (filter === 'featured') {
+    filtered = PRODUCTS.filter(p => p.featured);
+  } else if (filter !== 'all') {
+    filtered = PRODUCTS.filter(p => p.categories.includes(filter));
+  }
 
   if (filtered.length === 0) {
-    grid.innerHTML = '<p style="text-align:center;color:#888;grid-column:1/-1">No hay productos en esta categoría.</p>';
+    grid.innerHTML = '<p style="text-align:center;color:#888;grid-column:1/-1;padding:2rem">No hay productos en esta categoría.</p>';
     return;
   }
 
   grid.innerHTML = filtered.map(p => `
     <div class="product-card" data-categories="${p.categories.join(' ')}">
+      ${p.bestseller ? '<div class="product-badge bestseller">⭐ Más Vendido</div>' : ''}
+      ${p.featured ? '<div class="product-badge featured">🌟 Destacado</div>' : ''}
       <div class="product-img${p.img ? ' product-img--photo' : ''}">
         ${p.img
           ? `<img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.parentElement.innerHTML='${p.emoji}';this.parentElement.classList.remove('product-img--photo')">`
@@ -858,18 +869,116 @@ function getCategoryLabel(cat) {
 }
 
 function filterCatalog(filter, btn) {
-  // Update active button
+  // Update active buttons for both filter types
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.quick-filter-btn').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
+
+  // Clear search if filtering
+  const searchInput = document.getElementById('productSearch');
+  if (searchInput) searchInput.value = '';
+  const clearBtn = document.getElementById('clearSearchBtn');
+  if (clearBtn) clearBtn.style.display = 'none';
+
   renderCatalog(filter);
 }
+
+function toggleClearSearchBtn() {
+  const query = document.getElementById('productSearch').value;
+  const btn = document.getElementById('clearSearchBtn');
+  if (btn) {
+    btn.style.display = query.length > 0 ? 'block' : 'none';
+  }
+  searchProducts();
+}
+
+function clearSearch() {
+  const input = document.getElementById('productSearch');
+  if (input) input.value = '';
+  toggleClearSearchBtn();
+  const allBtn = document.querySelector('.quick-filter-btn[onclick*="all"]');
+  const allFilterBtn = document.querySelector('.filter-btn[onclick*="all"]');
+  if (allBtn) allBtn.classList.add('active');
+  if (allFilterBtn) allFilterBtn.classList.add('active');
+}
+
+function searchProducts() {
+  const query = document.getElementById('productSearch').value.toLowerCase().trim();
+  const grid = document.getElementById('catalogGrid');
+
+  if (!query) {
+    renderCatalog('all');
+    return;
+  }
+
+  // Clear active filters
+  document.querySelectorAll('.filter-btn, .quick-filter-btn').forEach(b => b.classList.remove('active'));
+
+  const filtered = PRODUCTS.filter(p =>
+    p.name.toLowerCase().includes(query) ||
+    p.desc.toLowerCase().includes(query) ||
+    p.categories.some(cat => cat.toLowerCase().includes(query))
+  );
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '<p style="text-align:center;color:#888;grid-column:1/-1;padding:2rem">No se encontraron productos que coincidan con tu búsqueda.</p>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(p => `
+    <div class="product-card" data-categories="${p.categories.join(' ')}">
+      ${p.bestseller ? '<div class="product-badge bestseller">⭐ Más Vendido</div>' : ''}
+      ${p.featured ? '<div class="product-badge featured">🌟 Destacado</div>' : ''}
+      <div class="product-img${p.img ? ' product-img--photo' : ''}">
+        ${p.img
+          ? `<img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.parentElement.innerHTML='${p.emoji}';this.parentElement.classList.remove('product-img--photo')">`
+          : p.emoji}
+      </div>
+      <div class="product-body">
+        <div class="product-category">${getCategoryLabel(p.categories[0])}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-desc">${p.desc}</div>
+        <div class="product-price">${CONFIG.currency} ${p.price.toFixed(2)}</div>
+      </div>
+      <div class="product-actions">
+        <button class="btn-add-cart" onclick="addToCart('${p.id}')">
+          + Agregar al carrito
+        </button>
+        <a class="btn-wa-product"
+           href="https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(`Hola, quiero información sobre *${p.name}* (Q${p.price}). ¿Está disponible?`)}"
+           target="_blank" rel="noopener"
+           onclick="trackWhatsApp('product-${p.id}')">
+          📲 Preguntar por WhatsApp
+        </a>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Add search on Enter key
+document.addEventListener('DOMContentLoaded', () => {
+  const searchInput = document.getElementById('productSearch');
+  if (searchInput) {
+    searchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        searchProducts();
+      }
+    });
+  }
+});
 
 // ============================================
 // NAVIGATION
 // ============================================
 function toggleMenu() {
   const nav = document.getElementById('mobileNav');
-  nav?.classList.toggle('open');
+  const overlay = document.getElementById('mobileNavOverlay');
+  const toggle = document.getElementById('menuToggle');
+  const isOpen = nav?.classList.toggle('open');
+  overlay?.classList.toggle('open', !!isOpen);
+  toggle?.classList.toggle('open', !!isOpen);
+  document.body.classList.toggle('menu-open', !!isOpen);
+  if (toggle) toggle.setAttribute('aria-expanded', String(!!isOpen));
 }
 
 function scrollToSection(id) {
@@ -957,4 +1066,15 @@ document.addEventListener('DOMContentLoaded', () => {
   renderCatalog();
   updateCartUI();
   setupRemarketing();
+
+  // Register Service Worker for PWA
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js')
+      .then((registration) => {
+        console.log('SW registered:', registration);
+      })
+      .catch((error) => {
+        console.log('SW registration failed:', error);
+      });
+  }
 });

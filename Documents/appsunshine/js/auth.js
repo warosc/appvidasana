@@ -208,14 +208,22 @@ function renderUserPanel() {
     : 100;
   const discount = (user.points * POINTS_REDEEM_RATE).toFixed(2);
 
+  // Apply metal/hologram tier class
+  const pointsCard = document.querySelector('.points-card');
+  if (pointsCard) {
+    pointsCard.classList.remove('bronze', 'silver', 'gold');
+    if (tier.name.includes('Bronce')) pointsCard.classList.add('bronze');
+    else if (tier.name.includes('Plata')) pointsCard.classList.add('silver');
+    else if (tier.name.includes('Oro')) pointsCard.classList.add('gold');
+  }
+
   document.getElementById('panelAvatar').textContent  = user.name[0].toUpperCase();
   document.getElementById('panelName').textContent    = user.name;
   document.getElementById('panelEmail').textContent   = user.email;
   document.getElementById('panelPoints').textContent  = user.points.toLocaleString();
   document.getElementById('panelTier').textContent    = tier.name;
-  document.getElementById('panelTier').style.color    = tier.color;
+  document.getElementById('panelTier').style.color    = '#FFFFFF'; // Contrast nicely against metallic card background
   document.getElementById('pointsBar').style.width    = `${progressPct}%`;
-  document.getElementById('pointsBar').style.background = tier.color;
   document.getElementById('pointsValue').textContent  = `Q ${discount}`;
   document.getElementById('pointsNext').innerHTML     = nextTier
     ? `Faltan <strong>${nextTier.min - user.points}</strong> pts para ${TIERS.find(t => t.min === nextTier.min)?.name}`

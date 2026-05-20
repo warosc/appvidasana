@@ -1,0 +1,25 @@
+{
+  "name": "Vida Saludable Guatemala",
+  "short_name": "VidaSaludable",
+  "description": "Productos naturales NSP para bajar de peso y más energía en Guatemala",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAFAF7",
+  "theme_color": "#5C6E2E",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "img/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["health", "shopping", "lifestyle"],
+  "lang": "es-GT",
+  "dir": "ltr"
+}
